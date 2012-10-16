@@ -17,6 +17,7 @@ boost::regex stReplaceRegexExpression;
 const char* szReplaceExpression;
 
 std::string strContent;
+bool bQuiet = false;
 
 void print_usage()
 {
@@ -34,6 +35,10 @@ int main(int argc, char* argv[])
 			{
 				print_usage();
 				return -1;
+			}
+			else if(strcmp(argv[i], "-quiet") == 0)
+			{
+				bQuiet = true;
 			}
 			else if(strcmp(argv[i], "-icmatch") == 0)
 			{
@@ -129,8 +134,11 @@ int main(int argc, char* argv[])
 					++iter)
 				{
 					bMatch = true;
-					for(int i=1; i<iter->size(); ++i)
-						printf("%s\n", iter->str(i).c_str());
+					if(!bQuiet)
+					{
+						for(int i=1; i<iter->size(); ++i)
+							printf("%s\n", iter->str(i).c_str());
+					}
 				}
 				if(!bMatch)
 					bHasAllMatch = false;
